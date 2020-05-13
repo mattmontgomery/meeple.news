@@ -7,8 +7,11 @@ const App = styled.section``;
 
 const PostsWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, minmax(400px, 800px));
+  grid-template-columns: auto;
   grid-column-gap: 1rem;
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(3, minmax(400px, 800px));
+  }
 `;
 
 const Index = ({ data }) => {

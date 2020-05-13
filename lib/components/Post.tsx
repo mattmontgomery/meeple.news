@@ -9,6 +9,9 @@ const PostWrapper = styled.a`
   text-decoration: none;
   color: initial;
   text-align: center;
+  img {
+    max-width: 100%;
+  }
 `;
 const PostTitle = styled.h2`
   margin: 0;
