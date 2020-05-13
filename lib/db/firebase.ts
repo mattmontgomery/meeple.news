@@ -1,0 +1,14 @@
+import path from "path";
+import firebase from "firebase";
+import admin from "firebase-admin";
+import "firebase/firestore";
+
+if (!firebase.apps.length) {
+  firebase.initializeApp({
+    credential: admin.credential.cert("serviceAccountKey.json"),
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+  });
+}
+
+export default firebase.firestore();
