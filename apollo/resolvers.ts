@@ -1,11 +1,23 @@
 import { GraphQLScalarType, Kind } from "graphql";
 
-import postsResolver from "./resolvers/posts";
+import postsResolver, { PostOptionsWhere } from "./resolvers/posts";
 import usersResolver from "./resolvers/users";
 
 export const resolvers = {
   Query: {
-    frontPagePosts: postsResolver,
+    posts: async (_, args, __, ___) => {
+      // console..log(parent, args, context, info);
+
+      return await postsResolver({
+        where: {
+          field: "placements",
+          value: args.placement
+            ? args.placement.toLowerCase()
+            : ["frontpage", "link"],
+          op: args.placement ? "array-contains" : "array-contains-any",
+        } as PostOptionsWhere,
+      });
+    },
     users: usersResolver,
   },
   Date: new GraphQLScalarType({

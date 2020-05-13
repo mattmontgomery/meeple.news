@@ -2,13 +2,27 @@ import db from "../../lib/db/firebase";
 import { Post } from "../../lib/interfaces";
 import { resolveUser } from "./users";
 import { firestore } from "firebase";
-import { DocumentData } from "@google-cloud/firestore";
+import { DocumentData, WhereFilterOp } from "@google-cloud/firestore";
 
-export default async function firebaseResolver(): Promise<Post[]> {
-  const querySnapshot = await db
+export interface PostOptionsWhere {
+  field: string;
+  value: string | string[];
+  op?: WhereFilterOp;
+}
+interface PostOptions {
+  where?: PostOptionsWhere;
+  limit?: number;
+}
+
+export default async function postsResolver(
+  options: PostOptions = {}
+): Promise<Post[]> {
+  const postsRef = db
     .collection("posts")
     .orderBy("submitted", "desc")
-    .get();
+    .where(options.where.field, options.where.op, options.where.value)
+    .limit(options.limit ?? 5);
+  const querySnapshot = await postsRef.get();
   return await Promise.all(querySnapshot.docs.map(resolveReferences));
 }
 
@@ -25,5 +39,7 @@ async function resolveReferences(
     thumbnail: data.thumbnail,
     link: data.link,
     publication: data.publication,
+    submitted: data.submitted!.toDate(),
+    placements: data.placements,
   };
 }

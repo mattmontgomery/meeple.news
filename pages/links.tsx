@@ -1,8 +1,10 @@
 import { withApollo } from "../apollo/client";
-import { frontpagePosts } from "../lib/queries/posts";
+import { linkPosts } from "../lib/queries/posts";
 import Post from "../lib/components/Post";
 import styled from "@emotion/styled";
-import { useQuery } from "@apollo/react-hooks";
+import { useLazyQuery, useQuery } from "@apollo/react-hooks";
+import ApolloClient from "apollo-client";
+import { Post as IPost } from "../lib/interfaces";
 
 const App = styled.section``;
 
@@ -16,9 +18,12 @@ const PostsWrapper = styled.div`
   }
 `;
 
-const Index = () => {
-  const { data } = useQuery(frontpagePosts);
-  // useLazyQuery(FrontPagePostsQuery);
+interface Data {
+  posts: IPost[];
+}
+
+const Links = () => {
+  const { data } = useQuery(linkPosts);
   return (
     <App>
       <PostsWrapper>
@@ -30,8 +35,10 @@ const Index = () => {
   );
 };
 
-Index.getInitialProps = async (context) => {
-  return await context.apolloClient.query({ query: frontpagePosts });
+Links.getInitialProps = async (context: {
+  apolloClient: ApolloClient<{ posts: IPost }>;
+}) => {
+  return await context.apolloClient.query({ query: linkPosts });
 };
 
-export default withApollo(Index);
+export default withApollo(Links);
