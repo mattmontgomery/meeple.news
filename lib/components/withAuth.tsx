@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 import initFirebase from "@db/initFirebase";
-
 initFirebase();
 
 const WithAuth = (BaseComponent) => (props) => {

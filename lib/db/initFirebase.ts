@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 
 export default () => {
   if (!firebase.apps.length) {
+    // console.log({ e: process.env });
     firebase.initializeApp({
       apiKey: process.env.FIREBASE_API_KEY,
       authDomain: process.env.FIREBASE_AUTH_DOMAIN,

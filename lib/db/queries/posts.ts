@@ -16,7 +16,7 @@ export default gql`
 
 export const frontpagePosts = gql`
   query {
-    posts(placement: FRONTPAGE) {
+    posts(placement: frontpage) {
       title
       thumbnail
       link
@@ -28,7 +28,7 @@ export const frontpagePosts = gql`
 
 export const linkPosts = gql`
   query {
-    posts(placement: LINK) {
+    posts(placement: link) {
       title
       thumbnail
       link
