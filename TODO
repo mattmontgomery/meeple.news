@@ -1,0 +1,3 @@
+- transition from firebase in client to graphql (even auth)
+     - would mean no real-time but whatevs
+- retrieve credentials from graphql instead of keeping them in client?

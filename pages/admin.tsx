@@ -21,7 +21,7 @@ export function Admin({ user }) {
   }, [user]);
   return data?.userByJwt?.roles.includes("admin") ? (
     <UserContext.Provider value={{ jwt: user?.token, email: user?.email }}>
-      <Posts />
+      <Posts apolloClient={null} apolloState={null} />
     </UserContext.Provider>
   ) : loading ? (
     <span></span>
