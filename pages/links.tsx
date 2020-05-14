@@ -1,8 +1,7 @@
 import { withApollo } from "../apollo/client";
-import { linkPosts } from "../lib/queries/posts";
+import { linkPosts } from "../lib/db/queries/posts";
 import Post from "../lib/components/Post";
 import styled from "@emotion/styled";
-import { useLazyQuery, useQuery } from "@apollo/react-hooks";
 import ApolloClient from "apollo-client";
 import { Post as IPost } from "../lib/interfaces";
 

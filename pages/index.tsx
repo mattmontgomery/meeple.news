@@ -1,6 +1,6 @@
 import { withApollo } from "../apollo/client";
-import { frontpagePosts } from "../lib/queries/posts";
-import Post from "../lib/components/Post";
+import { frontpagePosts } from "@db/queries/posts";
+import Post from "@components/Post";
 import styled from "@emotion/styled";
 import { GetStaticProps } from "next";
 import ApolloClient from "apollo-client";

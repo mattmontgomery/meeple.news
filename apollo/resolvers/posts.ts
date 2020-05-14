@@ -1,8 +1,10 @@
-import db from "../../lib/db/firebase";
+import db from "@db/firebase";
 import { Post } from "../../lib/interfaces";
 import { resolveUser } from "./users";
 import { firestore } from "firebase";
+import "firebase/auth";
 import { DocumentData, WhereFilterOp } from "@google-cloud/firestore";
+import authenticate from "@db/authenticate";
 
 export interface PostOptionsWhere {
   field: string;
@@ -33,13 +35,31 @@ async function resolveReferences(
   return {
     id: doc.id,
     title: data.title,
-    submittedBy: data.submittedBy
-      ? await resolveUser(await data.submittedBy.get())
-      : null,
     thumbnail: data.thumbnail,
     link: data.link,
     publication: data.publication,
     submitted: data.submitted!.toDate(),
     placements: data.placements,
   };
+}
+
+export async function updatePostResolver(_, args, context, ___) {
+  await authenticate(context?.token, "admin");
+  if (args.id) {
+    const doc = await db.collection(`posts`).doc(args.id);
+    doc.set(
+      {
+        ...args,
+      },
+      {
+        merge: true,
+      }
+    );
+    return await resolveReferences(await doc.get());
+  } else {
+    const doc = await db.collection("posts").add({
+      ...args,
+    });
+    return await resolveReferences(await doc.get());
+  }
 }

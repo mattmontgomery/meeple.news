@@ -5,4 +5,5 @@ import { resolvers } from "./resolvers";
 export const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
+  logger: { log: console.log },
 });

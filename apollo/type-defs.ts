@@ -3,32 +3,37 @@ import gql from "graphql-tag";
 export const typeDefs = gql`
   type User {
     id: ID!
+    email: String
     name: String
     displayName: String
     status: String!
+    authDomain: String
+    roles: [Roles]
+    jwt: String
   }
 
   type Query {
     frontPagePosts: [Post]
     linkPosts: [Post]
     posts(placement: Placement): [Post]
+    userByJwt(jwt: Jwt, email: Email): User
     users: [User]
     getPosts: [Post]
   }
 
   scalar Date
+  scalar Jwt
+  scalar Email
   enum Placement {
-    LINK
-    FRONTPAGE
+    link
+    frontpage
   }
-
-  query Posts($placements: Placement) {
-    posts(placements: $placements)
+  enum Roles {
+    admin
   }
 
   type Post {
-    id: String
-    submittedBy: User
+    id: ID!
     submitted: Date
     title: String!
     image: String
@@ -36,5 +41,17 @@ export const typeDefs = gql`
     link: String
     publication: String
     placements: [String]
+  }
+
+  type Mutation {
+    updatePost(
+      id: ID!
+      title: String
+      publication: String
+      submitted: Date
+      placements: [Placement]
+      thumbnail: String
+      link: String
+    ): Post
   }
 `;

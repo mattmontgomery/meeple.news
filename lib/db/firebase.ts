@@ -1,4 +1,3 @@
-import path from "path";
 import firebase from "firebase";
 import admin from "firebase-admin";
 import "firebase/firestore";

@@ -1,7 +1,10 @@
 import { GraphQLScalarType, Kind } from "graphql";
 
-import postsResolver, { PostOptionsWhere } from "./resolvers/posts";
-import usersResolver from "./resolvers/users";
+import postsResolver, {
+  PostOptionsWhere,
+  updatePostResolver,
+} from "./resolvers/posts";
+import usersResolver, { usersJwtResolver } from "./resolvers/users";
 
 export const resolvers = {
   Query: {
@@ -19,12 +22,21 @@ export const resolvers = {
       });
     },
     users: usersResolver,
+    userByJwt: async (_, args) => {
+      return await usersJwtResolver({
+        jwt: args.jwt,
+        email: args.email,
+      });
+    },
+  },
+  Mutation: {
+    updatePost: updatePostResolver,
   },
   Date: new GraphQLScalarType({
     name: "Date",
     description: "Date custom scalar type",
-    parseValue: (value) => new Date(value),
-    serialize: (value) => value.getTime(),
+    parseValue: (value) => new Date(parseInt(value, 10)),
+    serialize: (value) => (typeof value === "number" ? value : value.getTime()),
     parseLiteral: (ast) =>
       ast.kind === Kind.INT ? parseInt(ast.value, 10) : null,
   }),
