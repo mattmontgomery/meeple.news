@@ -18,12 +18,7 @@ const PostsWrapper = styled.div`
   }
 `;
 
-interface Data {
-  posts: IPost[];
-}
-
-const Links = () => {
-  const { data } = useQuery(linkPosts);
+const Links = ({ data }) => {
   return (
     <App>
       <PostsWrapper>
@@ -35,7 +30,7 @@ const Links = () => {
   );
 };
 
-Links.getStaticProps = async (context: {
+Links.getInitialProps = async (context: {
   apolloClient: ApolloClient<{ posts: IPost }>;
 }) => {
   return await context.apolloClient.query({ query: linkPosts });

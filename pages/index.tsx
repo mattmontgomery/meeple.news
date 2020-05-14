@@ -2,8 +2,9 @@ import { withApollo } from "../apollo/client";
 import { frontpagePosts } from "../lib/queries/posts";
 import Post from "../lib/components/Post";
 import styled from "@emotion/styled";
-import { useQuery } from "@apollo/react-hooks";
 import { GetStaticProps } from "next";
+import ApolloClient from "apollo-client";
+import { Post as IPost } from "../lib/interfaces";
 
 const App = styled.section``;
 
@@ -17,9 +18,7 @@ const PostsWrapper = styled.div`
   }
 `;
 
-const Index = () => {
-  const { data } = useQuery(frontpagePosts);
-  // useLazyQuery(FrontPagePostsQuery);
+const Index = ({ data }) => {
   return (
     <App>
       <PostsWrapper>
@@ -31,7 +30,9 @@ const Index = () => {
   );
 };
 
-Index.getStaticProps = async (context) => {
+Index.getInitialProps = async (context: {
+  apolloClient: ApolloClient<{ posts: IPost }>;
+}) => {
   return await context.apolloClient.query({ query: frontpagePosts });
 };
 
