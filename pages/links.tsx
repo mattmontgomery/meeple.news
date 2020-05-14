@@ -35,7 +35,7 @@ const Links = () => {
   );
 };
 
-Links.getInitialProps = async (context: {
+Links.getStaticProps = async (context: {
   apolloClient: ApolloClient<{ posts: IPost }>;
 }) => {
   return await context.apolloClient.query({ query: linkPosts });

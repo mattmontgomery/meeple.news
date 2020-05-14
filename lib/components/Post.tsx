@@ -34,7 +34,7 @@ const PostDetails = styled.div`
 export default function Post(props: IPost) {
   return (
     <PostWrapper href={props.link}>
-      <img src={props.thumbnail} alt={props.title} />
+      {props.thumbnail ? <img src={props.thumbnail} alt={props.title} /> : null}
       <PostDetails>
         <PostDate>
           <DateHelper date={props.submitted} />

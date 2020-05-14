@@ -3,6 +3,7 @@ import { frontpagePosts } from "../lib/queries/posts";
 import Post from "../lib/components/Post";
 import styled from "@emotion/styled";
 import { useQuery } from "@apollo/react-hooks";
+import { GetStaticProps } from "next";
 
 const App = styled.section``;
 
@@ -30,7 +31,7 @@ const Index = () => {
   );
 };
 
-Index.getInitialProps = async (context) => {
+Index.getStaticProps = async (context) => {
   return await context.apolloClient.query({ query: frontpagePosts });
 };
 

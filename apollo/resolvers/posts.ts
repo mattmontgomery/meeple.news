@@ -21,7 +21,7 @@ export default async function postsResolver(
     .collection("posts")
     .orderBy("submitted", "desc")
     .where(options.where.field, options.where.op, options.where.value)
-    .limit(options.limit ?? 5);
+    .limit(options.limit ?? 60);
   const querySnapshot = await postsRef.get();
   return await Promise.all(querySnapshot.docs.map(resolveReferences));
 }
