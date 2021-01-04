@@ -8,7 +8,7 @@ const WithAuth = (BaseComponent) => (props) => {
   const [user, setUser] = useState(null);
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async (_user) => {
-      if (!user) {
+      if (!user && _user) {
         setUser({
           email: _user.email,
           token: await _user.getIdToken(),

@@ -2,16 +2,20 @@ import React from "react";
 
 import styled from "@emotion/styled";
 import { Post as IPost } from "../interfaces";
+import Image from "next/image";
 import DateHelper from "./DateHelper";
 
 const PostWrapper = styled.a`
+  display: grid;
   padding: 1rem;
   background-color: #fafaff;
   text-decoration: none;
   color: initial;
   text-align: left;
-  img {
+  & .img {
+    position: relative;
     width: 100%;
+    height: 300px;
   }
 `;
 const PostTitle = styled.h2`
@@ -34,7 +38,16 @@ const PostDetails = styled.div`
 export default function Post(props: IPost) {
   return (
     <PostWrapper href={props.link}>
-      {props.thumbnail ? <img src={props.thumbnail} alt={props.title} /> : null}
+      {props.thumbnail ? (
+        <div className="img">
+          <Image
+            src={props.thumbnail}
+            alt={props.title}
+            layout="fill"
+            objectFit="contain"
+          />
+        </div>
+      ) : null}
       <PostDetails>
         <PostDate>
           <DateHelper date={props.submitted} />

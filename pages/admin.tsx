@@ -26,7 +26,10 @@ export function Admin({ user }) {
   ) : loading ? (
     <span></span>
   ) : (
-    <span>{"Nobody for specified token"}</span>
+    <>
+      {"Nobody for specified token"}
+      {JSON.stringify(user)}
+    </>
   );
 }
 

@@ -59,13 +59,13 @@ export default class App extends Document {
   render() {
     return (
       <Html lang="en">
-        <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Jost:wght@300;500;800&display=swap"
+        />
+        <Head>
           <title>meeple.news | news on board games and card games</title>
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Jost:wght@300;500;800&display=swap"
-          />
-        </head>
+        </Head>
         <Body>
           <BodyHeader>
             <BodyTitle>meeple.news</BodyTitle>
